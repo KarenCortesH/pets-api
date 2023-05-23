@@ -10,7 +10,7 @@
     import { Pet } from "./Pet";
     import { Reminder } from "./Reminder";
 
-    @Entity()
+    @Entity({ name: "inmunization" })
     export class Inmunization extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
@@ -32,7 +32,6 @@
 
     @ManyToOne(() => Pet, (pet) => pet.inmunization)
     @JoinColumn({ name: "pet_id" })
-    @Column()
     pet: Pet;
 
     @OneToMany(() => Reminder, (reminder) => reminder.immunization)

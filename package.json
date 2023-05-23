@@ -8,8 +8,11 @@
     "dev": "ts-node-dev --respawn src/index.ts",
     "build": "tsc",
     "start": "ts-node src/index.ts",
-    "typeorm": "typeorm-ts-node-commonjs",
-    "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/tsconfig.ts"
+    "typeorm": "npm run build && npx typeorm -d ./dist/db.js",
+    "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/tsconfig.ts",
+    "migration:generate": "npm  run typeorm -- migration:generate",
+    "migration:run": "npm run typeorm -- migration:run ",
+    "migration:revert": "npm run typeorm --migration:revert"
   },
   "repository": {
     "type": "git",
@@ -35,6 +38,7 @@
     "@types/express": "^4.17.17",
     "@types/morgan": "^1.9.4",
     "@types/node": "^20.1.7",
+    "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.4"
   }

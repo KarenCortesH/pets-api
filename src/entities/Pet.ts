@@ -10,13 +10,13 @@
     import { User } from "./User";
     import { Inmunization } from "./Inmunization";
 
-    @Entity()
+    @Entity({ name: "pet" })
     export class Pet extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    full_name: string;
+    @Column({ name: "full_name" })
+    fullName: string;
 
     @Column()
     breed: string;

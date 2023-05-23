@@ -7,7 +7,7 @@
     } from "typeorm";
     import { Inmunization } from "./Inmunization";
 
-    @Entity()
+    @Entity({ name: "reminder" })
     export class Reminder {
     @PrimaryGeneratedColumn()
     id: number;
@@ -19,6 +19,6 @@
     description: string;
 
     @ManyToOne(() => Inmunization, (inmunization) => inmunization.reminder)
-    @JoinColumn({ name: "idinmunization" })
+    @JoinColumn({ name: "id_inmunization" })
     immunization: Inmunization;
     }

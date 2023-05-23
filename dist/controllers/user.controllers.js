@@ -8,25 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-require("reflect-metadata");
-const app_1 = __importDefault(require("./app"));
-const db_1 = require("./db");
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield db_1.AppDataSource.initialize();
-            console.log("Database Connected");
-            app_1.default.listen(3000);
-            console.log("Server is listening on port", 3000);
-            console.log("World");
-        }
-        catch (error) {
-            console.log(error);
-        }
-    });
-}
-main();
+exports.createUser = void 0;
+const User_1 = require("../entities/User");
+const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //res.send("Hello World 2");
+    const { fullName, identificationNumber, phoneNumber, email, address } = req.body;
+    //Instanciamos
+    const user = new User_1.User();
+    user.authUid = "sdfdsvxcxcvxcvxcxvcxvcx";
+    user.fullName = fullName;
+    user.identificationNumber = identificationNumber;
+    user.phoneNumber = phoneNumber;
+    user.email = email;
+    user.address = address;
+    console.log(user);
+    const savedUser = yield user.save();
+    return savedUser;
+});
+exports.createUser = createUser;
