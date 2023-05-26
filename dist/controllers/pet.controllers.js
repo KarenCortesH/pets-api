@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletePet = exports.createPet = void 0;
+exports.getPets = exports.updatePet = exports.deletePet = exports.createPet = void 0;
 const Pet_1 = require("../entities/Pet");
+const console_1 = require("console");
 const createPet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { fullName, breed, gender, color } = req.body;
@@ -39,11 +40,43 @@ const deletePet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return res.sendStatus(204);
     }
     catch (error) {
-        if (error.instanceof)
-            Error;
-        {
+        if (error instanceof Error) {
             return res.status(500).json({ message: error.message });
         }
     }
 });
 exports.deletePet = deletePet;
+const updatePet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { fullName, breed, gender, color } = req.body;
+        const pet = yield Pet_1.Pet.findOneBy({ id: parseInt(req.params.id) });
+        if (!pet)
+            return res.status(404).json({ message: "Pet does not exits" });
+        pet.fullName = fullName;
+        pet.breed = breed;
+        pet.gender = gender;
+        pet.color = color;
+        //Aqui guardo los cambios
+        pet.save();
+        console.log(pet);
+        return res.json("Received");
+    }
+    catch (error) { }
+    if (console_1.error instanceof Error) {
+        return res.status(500).json({ message: console_1.error.message });
+    }
+});
+exports.updatePet = updatePet;
+const getPets = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        //buscamos todos los datos de la base de datos
+        const pets = yield Pet_1.Pet.find();
+        return res.json(pets);
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }
+});
+exports.getPets = getPets;
