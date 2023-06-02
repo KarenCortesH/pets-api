@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createPet, deletePet, getPets, updatePet } from "../controllers/pet.controllers";
+import { createPet, deletePet, getPets, getPet, updatePet } from "../controllers/pet.controllers";
 
 const router = Router();
 //devuelve este mensaje cuando visiten la ruta
@@ -12,6 +12,7 @@ router.post('/pet', createPet);
 router.patch('/pet/:id', updatePet);
 //route for Read Pet
 router.get('/pet', getPets);
+router.get('/pet/:id', getPet)
 //route for delete Pet
 router.delete('/pet/:id', deletePet);
 

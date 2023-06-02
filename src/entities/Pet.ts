@@ -28,7 +28,7 @@
     color: string;
 
     @ManyToOne(() => User, (user) => user.pet)
-    @JoinColumn({ name: "user" })
+    @JoinColumn({ name: "user_id" })
     user: User;
 
     @OneToMany(() => Inmunization, (inmunization) => inmunization.pet)

@@ -1,4 +1,4 @@
-    import {
+import {
     Column,
     Entity,
     ManyToOne,
@@ -6,35 +6,24 @@
     PrimaryGeneratedColumn,
     OneToMany,
     BaseEntity,
-    } from "typeorm";
-    import { Pet } from "./Pet";
-    import { Reminder } from "./Reminder";
+} from "typeorm";
+import { Pet } from "./Pet";
+import { Reminder } from "./Reminder";
 
-    @Entity({ name: "inmunization" })
-    export class Inmunization extends BaseEntity {
+@Entity({ name: "inmunization" })
+export class Inmunization extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
-
     @Column()
     date: Date;
-
-    @Column()
-    vaccine_name: string;
-
+    @Column({ name: "vaccine_name" })
+    vaccineName: string;
     @Column()
     brand: string;
-
-    @Column()
-    id_pet: number;
-
-    @Column()
-    id_reminder: number;
-
     @ManyToOne(() => Pet, (pet) => pet.inmunization)
     @JoinColumn({ name: "pet_id" })
     pet: Pet;
-
     @OneToMany(() => Reminder, (reminder) => reminder.immunization)
     reminder: Reminder[];
-    }
+}
 

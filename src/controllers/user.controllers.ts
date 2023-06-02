@@ -31,7 +31,7 @@ export const createUser = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
   try {
     const { phoneNumber, email, address } = req.body;
-    //Llamamos el modelo de user y busacamos por la propiedad ID
+    //Llamamos el modelo de user y buscamos por la propiedad ID
     const user = await User.findOneBy({ id: parseInt(req.params.id) });
     if (!user) return res.status(404).json({ message: "User does not exists" });
     user.phoneNumber = phoneNumber;
