@@ -1,12 +1,10 @@
 import { Request, Response } from "express";
 import { User } from "../entities/User";
 
+//Create
 export const createUser = async (req: Request, res: Response) => {
   try {
-    //res.send("Hello World 2");
-    const { fullName, identificationNumber, phoneNumber, email, address } =
-      req.body;
-    //throw new Error("My Error de Prueba!!!");
+    const { fullName, identificationNumber, phoneNumber, email, address } = req.body;
     //Instanciamos
     const user = new User();
     user.authUid = "sdfdsvxcxcvxcvxcxvcxvcx";
@@ -15,11 +13,7 @@ export const createUser = async (req: Request, res: Response) => {
     user.phoneNumber = phoneNumber;
     user.email = email;
     user.address = address;
-
-    console.log(user);
-
     const savedUser = await user.save();
-
     return savedUser;
   } catch (error) {
     if (error instanceof Error) {
@@ -28,6 +22,8 @@ export const createUser = async (req: Request, res: Response) => {
   }
 };
 
+
+//Update
 export const updateUser = async (req: Request, res: Response) => {
   try {
     const { phoneNumber, email, address } = req.body;
@@ -39,7 +35,6 @@ export const updateUser = async (req: Request, res: Response) => {
     user.address = address;
     //Aqui estoy guardando
     user.save();
-    console.log(user);
     return res.json("Received");
   } catch (error) {
     if (error instanceof Error) {
@@ -48,14 +43,14 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 };
 
+
+ //Delete
 export const deleteUser = async (req:Request, res: Response) => {
   try {
     const {id} = req.params;
     const result = await User.delete({ id: parseInt(req.params.id)})
-    console.log(result);
     if( result.affected === 0)
     return res.sendStatus(204)
-
   } catch (error) {
     if (error instanceof Error) {
       return res.status(500).json({ message: error.message });

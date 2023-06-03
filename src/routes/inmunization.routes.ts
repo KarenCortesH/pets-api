@@ -1,8 +1,12 @@
 import { Router } from "express";
-import { createInmunization } from "../controllers/inmunization.controllers";
+import { createInmunization, getInmunizations } from "../controllers/inmunization.controllers";
+
 const router = Router();
 
 //INMUNIZATION
-
-//route for create user
+//route for create Inmunization
 router.post('/inmunization', createInmunization);
+// //route for read Inmunization
+router.get('/inmunization', getInmunizations);
+
+export default router

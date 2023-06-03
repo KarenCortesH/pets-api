@@ -37,8 +37,8 @@ export const createPet = async (req: Request, res: Response) => {
 export const getPets = async (req: Request, res: Response) => {
     try {
         //buscamos todos los datos de la base de datos
-        const Listpets = await Pet.find();
-        return res.status(200).json(Listpets);
+        const listPets = await Pet.find();
+        return res.status(200).json(listPets);
     } catch (error) {
         if (error instanceof Error) {
             return res.status(500).json({ message: error.message });
