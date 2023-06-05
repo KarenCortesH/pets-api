@@ -48,8 +48,8 @@ export const getPets = async (req: Request, res: Response) => {
 
 export const getPet = async (req: Request, res: Response) => {
     try {
-        const { id } =  req.params
-        const existingPet  = await Pet.findOne({ where: {id : +id}});
+        const { id } = req.params
+        const existingPet = await Pet.findOne({ where: { id: +id } });
 
         if (!existingPet) throw new Error("cannot get the pet");
 
@@ -113,7 +113,7 @@ export const deletePet = async (req: Request, res: Response) => {
         const existingPet = await Pet.findOne({ where: { id: +id } });
         if (!existingPet) throw new Error("cannot get the pet")
 
-        const removedPet  = await Pet.remove(existingPet);
+        const removedPet = await Pet.remove(existingPet);
 
         return res.status(200).json(removedPet);
 

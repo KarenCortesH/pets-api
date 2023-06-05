@@ -18,7 +18,7 @@
     @Column()
     description: string;
 
-    @ManyToOne(() => Inmunization, (inmunization) => inmunization.reminder)
+    @ManyToOne(() => Inmunization, (inmunization) => inmunization.reminders)
     @JoinColumn({ name: "id_inmunization" })
     immunization: Inmunization;
     }

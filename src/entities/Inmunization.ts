@@ -24,6 +24,6 @@ export class Inmunization extends BaseEntity {
     @JoinColumn({ name: "pet_id" })
     pet: Pet;
     @OneToMany(() => Reminder, (reminder) => reminder.immunization)
-    reminder: Reminder[];
+    reminders: Reminder[];
 }
 
