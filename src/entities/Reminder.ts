@@ -4,11 +4,12 @@
     JoinColumn,
     PrimaryGeneratedColumn,
     ManyToOne,
+    BaseEntity,
     } from "typeorm";
     import { Inmunization } from "./Inmunization";
 
     @Entity({ name: "reminder" })
-    export class Reminder {
+    export class Reminder extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 

@@ -5,6 +5,7 @@ import cors from 'cors';
 import userRoutes from './routes/user.routes';
 import petRoutes from './routes/pet.routes';
 import inmunizationRoutes from './routes/inmunization.routes';
+import reminderRoutes  from './routes/reminder.routes';
 
 const app = express()
 app.use(morgan('dev'));
@@ -15,5 +16,6 @@ app.use(express.json());
 app.use(userRoutes);
 app.use(petRoutes);
 app.use(inmunizationRoutes);
+app.use(reminderRoutes);
 
 export default app;

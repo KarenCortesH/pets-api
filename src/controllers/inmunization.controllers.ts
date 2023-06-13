@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { Inmunization } from "../entities/Inmunization";
 import { Pet } from "../entities/Pet";
-import { User } from "../entities/User";
 
 //Create
 export const createInmunization = async (req: Request, res: Response) => {
@@ -50,8 +49,8 @@ export const updateInmunization = async (req: Request, res: Response) => {
         const { id } = req.params;
         const { date, vaccineName, brand, petId } = req.body;
         //Verificar si exite inmunizacion
-        const existingInmunizacition = await Inmunization.findOne({ where: { id: +id } })
-        if (!existingInmunizacition) {
+        const existingInmunization = await Inmunization.findOne({ where: { id: +id } })
+        if (!existingInmunization) {
             throw new Error("cannot get the Inmunization")
         }
         //Verificacion que el pet exista
@@ -62,7 +61,7 @@ export const updateInmunization = async (req: Request, res: Response) => {
         }
         //preload de la inmunization
         const preloadedInmunization = await Inmunization.preload({
-            id: existingInmunizacition.id,
+            id: existingInmunization.id,
             date,
             vaccineName,
             brand,
