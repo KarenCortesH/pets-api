@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateInmunization = exports.getInmunizations = exports.createInmunization = void 0;
+exports.deleteInmunization = exports.updateInmunization = exports.getInmunizations = exports.createInmunization = void 0;
 const Inmunization_1 = require("../entities/Inmunization");
 const Pet_1 = require("../entities/Pet");
 //Create
@@ -57,8 +57,8 @@ const updateInmunization = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const { id } = req.params;
         const { date, vaccineName, brand, petId } = req.body;
         //Verificar si exite inmunizacion
-        const existingInmunizacition = yield Inmunization_1.Inmunization.findOne({ where: { id: +id } });
-        if (!existingInmunizacition) {
+        const existingInmunization = yield Inmunization_1.Inmunization.findOne({ where: { id: +id } });
+        if (!existingInmunization) {
             throw new Error("cannot get the Inmunization");
         }
         //Verificacion que el pet exista
@@ -70,12 +70,16 @@ const updateInmunization = (req, res) => __awaiter(void 0, void 0, void 0, funct
         }
         //preload de la inmunization
         const preloadedInmunization = yield Inmunization_1.Inmunization.preload({
-            id: existingInmunizacition.id,
+            id: existingInmunization.id,
             date,
             vaccineName,
             brand,
             pet: existingPet
         });
+        //guardar inmunization
+        const savedInmunization = yield Inmunization_1.Inmunization.save(preloadedInmunization);
+        //retornar el resul
+        return res.status(200).json(savedInmunization);
     }
     catch (error) {
         if (error instanceof Error) {
@@ -84,3 +88,20 @@ const updateInmunization = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.updateInmunization = updateInmunization;
+//Delete
+const deleteInmunization = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const existingInmunization = yield Inmunization_1.Inmunization.findOne({ where: { id: +id } });
+        if (!existingInmunization)
+            throw new Error("Cannot get the Inmunization");
+        const removedInmunization = yield Inmunization_1.Inmunization.remove(existingInmunization);
+        return res.status(200).json(removedInmunization);
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }
+});
+exports.deleteInmunization = deleteInmunization;

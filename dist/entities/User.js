@@ -19,14 +19,6 @@ __decorate([
     __metadata("design:type", Number)
 ], User.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({
-        name: "auth_id",
-        type: "varchar",
-        length: 50,
-    }),
-    __metadata("design:type", String)
-], User.prototype, "authUid", void 0);
-__decorate([
     (0, typeorm_1.Column)({ name: "full_name" }),
     __metadata("design:type", String)
 ], User.prototype, "fullName", void 0);
@@ -50,6 +42,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => Pet_1.Pet, (pet) => pet.user),
     __metadata("design:type", Array)
 ], User.prototype, "pet", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], User.prototype, "password", void 0);
 User = __decorate([
     (0, typeorm_1.Entity)({ name: "user" })
 ], User);

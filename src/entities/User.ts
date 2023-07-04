@@ -14,13 +14,6 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    name: "auth_id",
-    type: "varchar",
-    length: 50,
-  })
-  authUid: string;
-
   @Column({ name: "full_name" })
   fullName: string;
 
@@ -38,4 +31,7 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Pet, (pet) => pet.user)
   pet: Pet[];
+
+  @Column()
+  password: string;
 }

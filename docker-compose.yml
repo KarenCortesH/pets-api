@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres
+    container_name: pets_postgres
+    restart: "no"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: pets_db

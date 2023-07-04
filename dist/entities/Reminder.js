@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Reminder = void 0;
 const typeorm_1 = require("typeorm");
 const Inmunization_1 = require("./Inmunization");
-let Reminder = class Reminder {
+let Reminder = class Reminder extends typeorm_1.BaseEntity {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),

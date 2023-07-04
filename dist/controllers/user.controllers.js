@@ -8,21 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.updateUser = exports.createUser = void 0;
 const User_1 = require("../entities/User");
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const saltRounds = 10;
 //Create
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { fullName, identificationNumber, phoneNumber, email, address } = req.body;
+        const { fullName, identificationNumber, phoneNumber, email, address, password } = req.body;
         //Instanciamos
         const user = new User_1.User();
-        user.authUid = "sdfdsvxcxcvxcvxcxvcxvcx";
         user.fullName = fullName;
         user.identificationNumber = identificationNumber;
         user.phoneNumber = phoneNumber;
         user.email = email;
         user.address = address;
+        user.password = yield bcrypt_1.default.hash(password, saltRounds);
         const savedUser = yield user.save();
         return savedUser;
     }

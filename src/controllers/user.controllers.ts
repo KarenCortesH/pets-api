@@ -1,18 +1,20 @@
 import { Request, Response } from "express";
 import { User } from "../entities/User";
+import bcrypt from "bcrypt";
+const saltRounds = 10;
 
 //Create
 export const createUser = async (req: Request, res: Response) => {
   try {
-    const { fullName, identificationNumber, phoneNumber, email, address } = req.body;
+    const { fullName, identificationNumber, phoneNumber, email, address, password } = req.body;
     //Instanciamos
     const user = new User();
-    user.authUid = "sdfdsvxcxcvxcvxcxvcxvcx";
     user.fullName = fullName;
     user.identificationNumber = identificationNumber;
     user.phoneNumber = phoneNumber;
     user.email = email;
     user.address = address;
+    user.password = await bcrypt.hash(password, saltRounds);
     const savedUser = await user.save();
     return savedUser;
   } catch (error) {
@@ -56,4 +58,4 @@ export const deleteUser = async (req:Request, res: Response) => {
       return res.status(500).json({ message: error.message });
     }
   }
-}
+  }
