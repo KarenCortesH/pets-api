@@ -12,4 +12,6 @@ router.post('/users', user_controllers_1.createUser);
 router.patch('/users/:id', user_controllers_1.updateUser);
 //route delete user
 router.delete('/users/:id', user_controllers_1.deleteUser);
+//route signin
+router.post('/users/signin', user_controllers_1.signIn);
 exports.default = router;

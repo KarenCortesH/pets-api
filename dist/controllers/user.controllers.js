@@ -12,10 +12,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateUser = exports.createUser = void 0;
+exports.deleteUser = exports.updateUser = exports.createUser = exports.signIn = void 0;
 const User_1 = require("../entities/User");
 const bcrypt_1 = __importDefault(require("bcrypt"));
+//import jwt from 'jsonwebtoken';
+const jwt = require("jsonwebtoken;");
+const SECRETE_KEY = "PETS_API";
 const saltRounds = 10;
+// SignIn
+const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { email, password } = req.body;
+        const existingEmail = yield User_1.User.findOne({ where: { email: email } });
+        if (!existingEmail) {
+            throw new Error('User not found');
+        }
+        const existingPass = yield bcrypt_1.default.compare(password, existingEmail.password);
+        if (!existingPass) {
+            throw new Error('Invalid Credentials');
+        }
+        const token = jwt.signin({ email: existingEmail.email, id: existingEmail.id }, SECRETE_KEY);
+        res.status(201).json({ token: token });
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }
+});
+exports.signIn = signIn;
 //Create
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
