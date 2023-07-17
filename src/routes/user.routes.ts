@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createUser, deleteUser, signIn, updateUser } from "../controllers/user.controllers";
+import { createUser, deleteUser, refreshToken, signIn, updateUser } from "../controllers/user.controllers";
 
 
 const router = Router();
@@ -15,6 +15,8 @@ router.patch('/users/:id', updateUser);
 router.delete('/users/:id', deleteUser);
 //route signin
 router.post('/users/signin', signIn);
+//route UserRefreshToken
+router.post('/users/refresh-token', refreshToken);
 
 
 

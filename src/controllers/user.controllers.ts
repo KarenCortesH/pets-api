@@ -1,10 +1,43 @@
 import { Request, Response } from "express";
-import { User } from "../entities/User";
 import bcrypt from "bcrypt";
-//import jwt from 'jsonwebtoken';
-const jwt = require("jsonwebtoken");
+import jwt from 'jsonwebtoken';
+
+import { User } from "../entities/User";
+
 const SECRETE_KEY = "PETS_API";
+const REFRESH_SECRET_KEY = "PETS_API1";
 const saltRounds = 10;
+
+
+//UserRefreshToken
+interface DecodedInterface {
+  id: number;
+  iat: number;
+}
+
+export const refreshToken = async (req: Request, res: Response) => {
+  try {
+    //pido que me psen el refreshtoken
+    const refreshToken = req.body.refreshToken;
+    //Despues decodifico  el token 
+    const decode = jwt.decode(refreshToken) as DecodedInterface;
+    //pido un dato para identificar el user
+    const { id } = decode;
+    //Aqui estoy creando el nuevo token sin necesidad de volverme a loggear
+    const token = jwt.sign({ id }, SECRETE_KEY, { expiresIn: '20m' });
+    const newRefreshToken = jwt.sign({ id }, REFRESH_SECRET_KEY);
+
+    return res.send({
+      token,
+      refreshToken: newRefreshToken,
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      return res.status(500).json({ message: error.message });
+    }
+  }
+
+}
 
 // SignIn
 export const signIn = async (req: Request, res: Response) => {
@@ -25,12 +58,8 @@ export const signIn = async (req: Request, res: Response) => {
         token: null,
         message: "Invalid Password",
       });
-
-    const token = jwt.signIn({ id: existingEmail.id }, SECRETE_KEY, {
-      expiresIn: '5m',
-    });
-
-    res.json({ token });
+    const token = jwt.sign({ id: existingEmail.id }, SECRETE_KEY, { expiresIn: '20m' });
+    return res.json({ token });
   } catch (error) {
     if (error instanceof Error) {
       return res.status(500).json({ message: error.message });
@@ -50,7 +79,8 @@ export const createUser = async (req: Request, res: Response) => {
     user.address = address;
     user.password = await bcrypt.hash(password, saltRounds);
     const savedUser = await user.save();
-    return savedUser;
+    savedUser.save();
+    return res.json("Received");
   } catch (error) {
     if (error instanceof Error) {
       return res.status(500).json({ message: error.message });
