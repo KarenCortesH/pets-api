@@ -19,7 +19,7 @@ export const refreshToken = async (req: Request, res: Response) => {
   try {
     //pido que me psen el refreshtoken
     const refreshToken = req.body.refreshToken;
-    //Despues decodifico  el token 
+    //Despues decodifico  el token
     const decode = jwt.decode(refreshToken) as DecodedInterface;
     //pido un dato para identificar el user
     const { id } = decode;
